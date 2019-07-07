@@ -4,6 +4,8 @@ import webpack from 'webpack';
 import merge from 'webpack-merge';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 import common, { makeCssConfig } from './webpack.common';
 
@@ -29,5 +31,21 @@ export default merge(common, {
             chunkFilename: '[id].[hash].css',
         }),
     ],
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                parallel: true,
+                sourceMap: true,
+            }),
+            new OptimizeCssAssetsPlugin({
+                cssProcessorOptions: {
+                    map: {
+                        inline: false,
+                        annotation: false,
+                    },
+                },
+            }),
+        ],
+    },
     devtool: 'hidden-source-map',
 });
