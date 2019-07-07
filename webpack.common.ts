@@ -3,12 +3,11 @@ import * as path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import postcssPresetEnv from 'postcss-preset-env';
 import WebpackBar from 'webpackbar';
 
 const config: webpack.Configuration = {
     entry: {
-        app: './src/index.tsx',
+        app: path.resolve(__dirname, 'src/index.tsx'),
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -17,20 +16,29 @@ const config: webpack.Configuration = {
         rules: [
             {
                 test: /\.tsx?$/,
+                exclude: /node_modules/,
                 use: [
                     'babel-loader',
                     'ts-loader',
+                    'astroturf/loader',
                 ],
+            },
+            {
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
+                use: [
+                    'babel-loader',
+                    'astroturf/loader',
+                ],
             },
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.jsx', '.js'],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'index.html',
+            template: path.resolve(__dirname, 'src/index.html'),
             title: 'Template by tirr-c',
             description: 'Placeholder description.',
             meta: {
@@ -59,21 +67,7 @@ export function makeCssConfig(isProduction: boolean) {
         test: /\.css$/,
         use: [
             isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-            {
-                loader: 'css-loader',
-                options: {
-                    modules: true,
-                    camelCase: true,
-                    importLoaders: 1,
-                },
-            },
-            {
-                loader: 'postcss-loader',
-                options: {
-                    ident: 'postcss',
-                    plugins: () => [postcssPresetEnv()],
-                },
-            },
+            'astroturf/css-loader',
         ],
     };
 }

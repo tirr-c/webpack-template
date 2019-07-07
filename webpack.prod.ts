@@ -29,4 +29,5 @@ export default merge(common, {
             chunkFilename: '[id].[hash].css',
         }),
     ],
+    devtool: 'hidden-source-map',
 });
