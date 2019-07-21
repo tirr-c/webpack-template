@@ -19,8 +19,8 @@ const config: webpack.Configuration = {
                 exclude: /node_modules/,
                 use: [
                     'babel-loader',
-                    'ts-loader',
                     'astroturf/loader',
+                    'ts-loader',
                 ],
             },
             {
