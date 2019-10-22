@@ -6,8 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack-dev-server --config webpack.dev.ts",
-    "build": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack --config"
+    "dev": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack-dev-server --config webpack.config.ts --env dev",
+    "build": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack --config webpack.config.ts --env"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
